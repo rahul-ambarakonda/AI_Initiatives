@@ -1,5 +1,6 @@
 'use client';
 
+import type { FormEvent } from 'react';
 import { useState } from 'react';
 import { z } from 'zod';
 
@@ -7,10 +8,8 @@ const demoRequestSchema = z.object({
   name: z.string().min(2, 'Name must be at least 2 characters'),
   email: z.string().email('Invalid email address'),
   company: z.string().min(1, 'Company name is required'),
-  phone: z.string().optional(),
-  message: z.string().optional(),
-  projectOfInterest: z.string().optional(),
-  preferredDemoDate: z.string().optional(),
+  project: z.string().min(1, 'Please choose a project of interest'),
+  description: z.string().min(1, 'Please add a short description'),
 });
 
 type DemoRequest = z.infer<typeof demoRequestSchema>;
@@ -20,39 +19,39 @@ export default function ContactForm() {
     name: '',
     email: '',
     company: '',
-    phone: '',
-    message: '',
-    projectOfInterest: '',
-    preferredDemoDate: '',
+    project: '',
+    description: '',
   });
+
   const [errors, setErrors] = useState<z.ZodError | null>(null);
   const [isSubmitting, setIsSubmitting] = useState(false);
-  const [submitStatus, setSubmitStatus] = useState<'success' | 'error' | null>(null);
+  const [submitStatus, setSubmitStatus] = useState<'success' | 'error' | null>(
+    null
+  );
 
-  const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
+  const handleSubmit = async (event: FormEvent<HTMLFormElement>) => {
     event.preventDefault();
-    setIsSubmitting(true);
-    setSubmitStatus(null);
-    setErrors(null);
 
     const result = demoRequestSchema.safeParse(formData);
+
     if (!result.success) {
       setErrors(result.error);
-      setIsSubmitting(false);
+      setSubmitStatus('error');
       return;
     }
+
+    setErrors(null);
+    setIsSubmitting(true);
 
     try {
       const response = await fetch('/api/demos', {
         method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
+        headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify(result.data),
       });
 
       if (!response.ok) {
-        throw new Error('Something went wrong');
+        throw new Error('Request failed');
       }
 
       setSubmitStatus('success');
@@ -60,12 +59,10 @@ export default function ContactForm() {
         name: '',
         email: '',
         company: '',
-        phone: '',
-        message: '',
-        projectOfInterest: '',
-        preferredDemoDate: '',
+        project: '',
+        description: '',
       });
-    } catch (error) {
+    } catch {
       setSubmitStatus('error');
     } finally {
       setIsSubmitting(false);
@@ -73,65 +70,166 @@ export default function ContactForm() {
   };
 
   return (
-    <form onSubmit={handleSubmit} className="space-y-6">
-      <div>
-        <label htmlFor="name" className="block text-sm font-medium text-gray-700">
-          Name
-        </label>
-        <input
-          type="text"
-          id="name"
-          value={formData.name}
-          onChange={(e) => setFormData({ ...formData, name: e.target.value })}
-          className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-primary-500 focus:ring-primary-500 sm:text-sm"
-        />
-        {errors?.issues.find((issue) => issue.path[0] === 'name') && (
-          <p className="mt-2 text-sm text-red-600">{errors.issues.find((issue) => issue.path[0] === 'name')?.message}</p>
-        )}
+    <div className="max-w-7xl mx-auto px-4">
+      {/* Header */}
+      <div className="text-center mb-8">
+        <p className="text-sm tracking-widest text-blue-500 font-semibold uppercase">
+          LET'S TALK
+        </p>
+
+        <h2 className="text-4xl font-bold mt-2">
+          Request a <span className="text-indigo-600">live demo</span>
+        </h2>
+
+        <p className="text-gray-500 mt-2">
+          Tell us a bit about you and we'll get back within one business day.
+        </p>
       </div>
-      <div>
-        <label htmlFor="email" className="block text-sm font-medium text-gray-700">
-          Email
-        </label>
-        <input
-          type="email"
-          id="email"
-          value={formData.email}
-          onChange={(e) => setFormData({ ...formData, email: e.target.value })}
-          className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-primary-500 focus:ring-primary-500 sm:text-sm"
-        />
-        {errors?.issues.find((issue) => issue.path[0] === 'email') && (
-          <p className="mt-2 text-sm text-red-600">{errors.issues.find((issue) => issue.path[0] === 'email')?.message}</p>
-        )}
+
+      {/* Form Container */}
+      <div className="bg-blue-50 border border-gray-200 rounded-2xl shadow-lg p-10">
+        <form onSubmit={handleSubmit} className="space-y-6">
+          {/* Row 1 */}
+          <div className="grid md:grid-cols-2 gap-6">
+            <div>
+              <label className="text-sm font-medium text-gray-700">
+                FULL NAME *
+              </label>
+              <input
+                type="text"
+                placeholder="Enter your full name"
+                value={formData.name}
+                onChange={(e) =>
+                  setFormData({ ...formData, name: e.target.value })
+                }
+                className="mt-2 w-full rounded-xl border border-gray-300 bg-gray-200 px-4 py-3 placeholder-gray-500 focus:bg-white focus:ring-2 focus:ring-indigo-500 outline-none"
+              />
+            </div>
+
+            <div>
+              <label className="text-sm font-medium text-gray-700">
+                WORK EMAIL *
+              </label>
+              <input
+                type="email"
+                placeholder="Enter your work email"
+                value={formData.email}
+                onChange={(e) =>
+                  setFormData({ ...formData, email: e.target.value })
+                }
+                className="mt-2 w-full rounded-xl border border-gray-300 bg-gray-200 px-4 py-3 placeholder-gray-500 focus:bg-white focus:ring-2 focus:ring-indigo-500 outline-none"
+              />
+            </div>
+          </div>
+
+          {/* Row 2 */}
+          <div className="grid md:grid-cols-2 gap-6">
+            <div>
+              <label className="text-sm font-medium text-gray-700">
+                COMPANY *
+              </label>
+              <input
+                type="text"
+                placeholder="Enter your company name"
+                value={formData.company}
+                onChange={(e) =>
+                  setFormData({ ...formData, company: e.target.value })
+                }
+                className="mt-2 w-full rounded-xl border border-gray-300 bg-gray-200 px-4 py-3 placeholder-gray-500 focus:bg-white focus:ring-2 focus:ring-indigo-500 outline-none"
+              />
+            </div>
+
+            <div>
+              <label className="text-sm font-medium text-gray-700">
+                PROJECT INTERESTED IN *
+              </label>
+
+              <select
+                value={formData.project}
+                onChange={(e) =>
+                  setFormData({ ...formData, project: e.target.value })
+                }
+                className="mt-2 w-full rounded-xl border border-gray-300 bg-gray-200 px-4 py-3 placeholder-gray-500 focus:bg-white focus:ring-2 focus:ring-indigo-500 outline-none"
+              >
+                <option value="">Select an option</option>
+                <option>Design Document to 3D Model</option>
+                <option>Automated CAD to PDF Conversion</option>
+                <option>CodeLens AI</option>
+                <option>Agentic CAD to Creo</option>
+                <option>Enterprise Document Intelligence</option>
+                <option>Vendor Performance Analytics</option>
+                <option>AI SDLC</option>
+              </select>
+            </div>
+          </div>
+
+          {/* Message */}
+          <div>
+            <label className="text-sm font-medium text-gray-700">
+              DESCRIPTION *
+            </label>
+
+            <textarea
+              rows={4}
+              placeholder="What problem are you trying to solve?"
+              value={formData.description}
+              onChange={(e) =>
+                setFormData({ ...formData, description: e.target.value })
+              }
+              className="mt-2 w-full rounded-xl border border-gray-300 bg-gray-200 px-4 py-3 placeholder-gray-500 focus:bg-white focus:ring-2 focus:ring-indigo-500 outline-none"
+            />
+          </div>
+
+          {/* Button */}
+          <div className="flex justify-center">
+            <button
+              type="submit"
+              disabled={isSubmitting}
+              className="flex items-center gap-2 bg-gradient-to-r from-blue-600 to-purple-600 text-white px-8 py-3 rounded-full font-semibold hover:opacity-90 transition disabled:opacity-60"
+            >
+              {isSubmitting ? 'Submitting...' : 'Send request'}
+
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                className="w-4 h-4"
+                fill="none"
+                viewBox="0 0 24 24"
+                stroke="currentColor"
+              >
+                <path
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                  strokeWidth={2}
+                  d="M22 2L11 13M22 2L15 22L11 13L2 9L22 2Z"
+                />
+              </svg>
+            </button>
+          </div>
+
+          {/* Agreement text */}
+          <p className="text-sm text-gray-500">
+            By submitting, you agree to be contacted about your demo request.
+          </p>
+
+          {errors && (
+            <p className="text-red-600 text-sm">
+              {errors.issues[0]?.message ?? 'Please fix the highlighted fields.'}
+            </p>
+          )}
+
+          {submitStatus === 'success' && (
+            <p className="text-green-600 text-sm">
+              Request submitted successfully!
+            </p>
+          )}
+
+          {submitStatus === 'error' && !errors && (
+            <p className="text-red-600 text-sm">
+              Something went wrong.
+            </p>
+          )}
+        </form>
       </div>
-      <div>
-        <label htmlFor="company" className="block text-sm font-medium text-gray-700">
-          Company
-        </label>
-        <input
-          type="text"
-          id="company"
-          value={formData.company}
-          onChange={(e) => setFormData({ ...formData, company: e.target.value })}
-          className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-primary-500 focus:ring-primary-500 sm:text-sm"
-        />
-        {errors?.issues.find((issue) => issue.path[0] === 'company') && (
-          <p className="mt-2 text-sm text-red-600">{errors.issues.find((issue) => issue.path[0] === 'company')?.message}</p>
-        )}
-      </div>
-      <div>
-        <button
-          type="submit"
-          disabled={isSubmitting}
-          className="w-full justify-center rounded-md border border-transparent bg-primary-600 py-2 px-4 text-sm font-medium text-white shadow-sm hover:bg-primary-700 focus:outline-none focus:ring-2 focus:ring-primary-500 focus:ring-offset-2"
-        >
-          {isSubmitting ? 'Submitting...' : 'Submit'}
-        </button>
-      </div>
-      {submitStatus === 'success' && (
-        <p className="mt-2 text-sm text-green-600">Your request has been submitted successfully.</p>
-      )}
-      {submitStatus === 'error' && <p className="mt-2 text-sm text-red-600">Something went wrong. Please try again.</p>}
-    </form>
+    </div>
   );
 }

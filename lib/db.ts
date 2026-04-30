@@ -1,27 +1,11 @@
-import sqlite3 from 'sqlite3';
-
-const db = new sqlite3.Database('./demos.db');
-
-db.serialize(() => {
-    db.run(`
-        CREATE TABLE IF NOT EXISTS demos (
-            id INTEGER PRIMARY KEY AUTOINCREMENT,
-            name TEXT NOT NULL,
-            email TEXT NOT NULL,
-            company TEXT NOT NULL
-        )
-    `);
-});
-
-export default db;
 import initSqlJs, { Database as SqlJsDatabase } from 'sql.js';
-import path from 'path';
 import fs from 'fs';
+import path from 'path';
 
 const dbPath = path.join(process.cwd(), 'demos.db');
 
 let db: SqlJsDatabase | null = null;
-let SQL: any = null;
+let SQL: Awaited<ReturnType<typeof initSqlJs>> | null = null;
 
 async function initializeSQL() {
   if (!SQL) {
@@ -32,25 +16,24 @@ async function initializeSQL() {
 
 export async function getDatabase(): Promise<SqlJsDatabase> {
   if (!db) {
-    const SQL = await initializeSQL();
-    
-    // Load existing database or create new one
+    const sql = await initializeSQL();
+
     if (fs.existsSync(dbPath)) {
       const buffer = fs.readFileSync(dbPath);
-      db = new SQL.Database(buffer);
+      db = new sql.Database(buffer);
     } else {
-      db = new SQL.Database();
+      db = new sql.Database();
     }
-    
+
     initializeDatabase();
   }
-  return db as SqlJsDatabase;
+
+  return db;
 }
 
 function initializeDatabase() {
   if (!db) return;
-  
-  // Create the demos table if it doesn't exist
+
   db.run(`
     CREATE TABLE IF NOT EXISTS demos (
       id INTEGER PRIMARY KEY AUTOINCREMENT,
@@ -66,15 +49,16 @@ function initializeDatabase() {
       updated_at DATETIME DEFAULT CURRENT_TIMESTAMP
     );
   `);
-  
+
   try {
     db.run(`CREATE INDEX IF NOT EXISTS idx_email ON demos(email);`);
     db.run(`CREATE INDEX IF NOT EXISTS idx_created_at ON demos(created_at);`);
     db.run(`CREATE INDEX IF NOT EXISTS idx_status ON demos(status);`);
-  } catch (e) {
-    // Indexes might already exist
+  } catch (error) {
+    // Indexes may already exist in older database files.
+    void error;
   }
-  
+
   saveDatabase();
 }
 
@@ -94,6 +78,7 @@ export interface DemoRequest {
 
 function saveDatabase() {
   if (!db) return;
+
   const data = db.export();
   const buffer = Buffer.from(data);
   fs.writeFileSync(dbPath, buffer);
@@ -101,12 +86,12 @@ function saveDatabase() {
 
 export async function saveDemoRequest(data: DemoRequest): Promise<DemoRequest> {
   const database = await getDatabase();
-  
+
   const stmt = database.prepare(`
     INSERT INTO demos (name, email, company, phone, message, projectOfInterest, preferredDemoDate)
     VALUES (?, ?, ?, ?, ?, ?, ?)
   `);
-  
+
   try {
     stmt.bind([
       data.name,
@@ -115,25 +100,24 @@ export async function saveDemoRequest(data: DemoRequest): Promise<DemoRequest> {
       data.phone || null,
       data.message || null,
       data.projectOfInterest || null,
-      data.preferredDemoDate || null
+      data.preferredDemoDate || null,
     ]);
-    
+
     stmt.step();
     stmt.free();
-    
+
     saveDatabase();
-    
-    // Get the last inserted ID
+
     const countStmt = database.prepare('SELECT last_insert_rowid() as id');
     countStmt.step();
     const result = countStmt.getAsObject();
     countStmt.free();
-    
+
     return {
       ...data,
-      id: (result as any)?.id || 0,
+      id: (result as { id?: number })?.id || 0,
       created_at: new Date().toISOString(),
-      status: 'new'
+      status: 'new',
     };
   } catch (error) {
     console.error('Error saving demo request:', error);
@@ -141,54 +125,62 @@ export async function saveDemoRequest(data: DemoRequest): Promise<DemoRequest> {
   }
 }
 
-export async function getAllDemoRequests(limit = 100, offset = 0): Promise<DemoRequest[]> {
+export async function getAllDemoRequests(
+  limit = 100,
+  offset = 0
+): Promise<DemoRequest[]> {
   const database = await getDatabase();
   const stmt = database.prepare(`
     SELECT * FROM demos
     ORDER BY created_at DESC
     LIMIT ? OFFSET ?
   `);
-  
+
   stmt.bind([limit, offset]);
   const results: DemoRequest[] = [];
-  
+
   while (stmt.step()) {
     results.push(stmt.getAsObject() as unknown as DemoRequest);
   }
-  
+
   stmt.free();
   return results;
 }
 
-export async function getDemoRequestById(id: number): Promise<DemoRequest | undefined> {
+export async function getDemoRequestById(
+  id: number
+): Promise<DemoRequest | undefined> {
   const database = await getDatabase();
   const stmt = database.prepare('SELECT * FROM demos WHERE id = ?');
-  
+
   stmt.bind([id]);
-  
+
   if (stmt.step()) {
     const result = stmt.getAsObject() as unknown as DemoRequest;
     stmt.free();
     return result;
   }
-  
+
   stmt.free();
   return undefined;
 }
 
-export async function updateDemoStatus(id: number, status: string): Promise<boolean> {
+export async function updateDemoStatus(
+  id: number,
+  status: string
+): Promise<boolean> {
   const database = await getDatabase();
   const stmt = database.prepare(`
-    UPDATE demos 
-    SET status = ?, updated_at = CURRENT_TIMESTAMP 
+    UPDATE demos
+    SET status = ?, updated_at = CURRENT_TIMESTAMP
     WHERE id = ?
   `);
-  
+
   try {
     stmt.bind([status, id]);
     stmt.step();
     stmt.free();
-    
+
     saveDatabase();
     return true;
   } catch (error) {

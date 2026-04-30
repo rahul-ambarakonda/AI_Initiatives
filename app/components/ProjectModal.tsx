@@ -7,14 +7,16 @@ type ProjectModalProps = {
   isOpen: boolean;
   onClose: () => void;
   project: Project;
+  onRequestDemo: () => void; // ADDED
 };
 
-export default function ProjectModal({ isOpen, onClose, project }: ProjectModalProps) {
+export default function ProjectModal({ isOpen, onClose, project, onRequestDemo }: ProjectModalProps) {
   if (!isOpen) return null;
 
   return (
     <div className="fixed inset-0 bg-black bg-opacity-75 z-50 flex items-center justify-center p-4 animate-fade-in">
       <div className="relative bg-white rounded-2xl shadow-2xl max-w-4xl w-full max-h-[90vh] overflow-hidden flex flex-col">
+        
         {/* Close Button */}
         <button
           onClick={onClose}
@@ -32,6 +34,7 @@ export default function ProjectModal({ isOpen, onClose, project }: ProjectModalP
 
         {/* Modal Body */}
         <div className="overflow-y-auto">
+
           {/* Project Image Header */}
           <div className="relative h-72 w-full">
             <Image
@@ -44,13 +47,20 @@ export default function ProjectModal({ isOpen, onClose, project }: ProjectModalP
           </div>
 
           <div className="p-8 md:p-12">
+
             {/* Title section */}
             <div className="text-center mb-10">
               <span className="inline-block px-4 py-2 text-sm font-bold text-gray-600 bg-gray-100 rounded-full mb-6">
                 {project.category}
               </span>
-              <h2 className="text-4xl md:text-5xl font-bold text-gray-900 mb-4">{project.title}</h2>
-              <p className="text-lg text-gray-700 leading-relaxed max-w-3xl mx-auto">{project.description}</p>
+
+              <h2 className="text-4xl md:text-5xl font-bold text-gray-900 mb-4">
+                {project.title}
+              </h2>
+
+              <p className="text-lg text-gray-700 leading-relaxed max-w-3xl mx-auto">
+                {project.description}
+              </p>
             </div>
 
             {/* Problem Statement */}
@@ -58,6 +68,7 @@ export default function ProjectModal({ isOpen, onClose, project }: ProjectModalP
               <h3 className="text-2xl font-bold text-gray-900 mb-4 border-l-4 border-gray-600 pl-4">
                 Problem Statement
               </h3>
+
               <ul className="space-y-3 pl-4">
                 {project.problemStatement.map((problem, idx) => (
                   <li key={idx} className="flex items-start gap-3 text-gray-800">
@@ -73,14 +84,18 @@ export default function ProjectModal({ isOpen, onClose, project }: ProjectModalP
               <h3 className="text-2xl font-bold text-gray-900 mb-4 border-l-4 border-gray-600 pl-4">
                 Our Solution
               </h3>
-              <p className="text-gray-800 leading-relaxed pl-4">{project.solution}</p>
+
+              <p className="text-gray-800 leading-relaxed pl-4">
+                {project.solution}
+              </p>
             </div>
-            
+
             {/* Key Benefits */}
             <div className="mb-10">
               <h3 className="text-2xl font-bold text-gray-900 mb-4 border-l-4 border-gray-600 pl-4">
                 Key Benefits
               </h3>
+
               <div className="grid md:grid-cols-2 gap-4 pl-4">
                 {project.benefits.map((benefit, idx) => (
                   <div key={idx} className="flex items-start gap-3 text-gray-800">
@@ -96,13 +111,48 @@ export default function ProjectModal({ isOpen, onClose, project }: ProjectModalP
               <h3 className="text-2xl font-bold text-gray-900 mb-4 border-l-4 border-gray-600 pl-4">
                 Key Features
               </h3>
+
               <div className="flex flex-wrap gap-3 pl-4">
                 {project.features.map((feature, idx) => (
-                  <div key={idx} className="text-gray-800 py-2 px-4 rounded-full bg-gray-100 border border-gray-200 font-semibold">
+                  <div
+                    key={idx}
+                    className="text-gray-800 py-2 px-4 rounded-full bg-gray-100 border border-gray-200 font-semibold"
+                  >
                     {feature}
                   </div>
                 ))}
               </div>
+
+              {/* Request Demo Button */}
+              <div className="mt-12 flex justify-center">
+                <button
+                  onClick={onRequestDemo}   // ADDED
+                  className="group w-full md:w-[70%] flex items-center justify-center gap-2 py-4 rounded-full font-semibold text-white 
+                  bg-gradient-to-r from-blue-600 to-purple-600
+                  hover:from-blue-700 hover:to-purple-700
+                  transition-all duration-300
+                  transform hover:scale-[1.02] hover:shadow-xl"
+                >
+                  Request a demo
+
+                  <svg
+                    xmlns="http://www.w3.org/2000/svg"
+                    className="w-5 h-5 transition-transform duration-300 group-hover:translate-x-1"
+                    fill="none"
+                    viewBox="0 0 24 24"
+                    stroke="currentColor"
+                  >
+                    <path
+                      strokeLinecap="round"
+                      strokeLinejoin="round"
+                      strokeWidth={2}
+                      d="M22 2L11 13M22 2L15 22L11 13L2 9L22 2Z"
+                    />
+                  </svg>
+
+                </button>
+              </div>
+
             </div>
           </div>
         </div>

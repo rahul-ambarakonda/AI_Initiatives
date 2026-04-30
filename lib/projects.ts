@@ -119,6 +119,26 @@ export const projects = [
     features: ['Three-Pillar Evaluation', 'Real-time Analytics', 'Hierarchical Reporting'],
     imageUrl: '/assets/stephen-phillips-hostreviews-co-uk-shr_Xn8S8QU-unsplash.jpg', // Dashboard/Analytics
   },
+  {
+    id: 7,
+    title: 'AI SDLC',
+    description: 'An AI-powered software delivery platform that orchestrates the full SDLC, from project intake and Jira planning to coding, testing, security checks, and release review.',
+    category: 'AI Project Automation',
+    problemStatement: [
+      'Software teams spend too much time coordinating project setup, issue creation, and handoffs across planning, coding, QA, and security.',
+      'Delivery workflows are often fragmented across multiple tools, making it difficult to keep sprint status, implementation progress, and approvals in sync.',
+      'Manual coordination slows down releases and makes it harder to enforce consistent quality gates across projects.'
+    ],
+    solution: 'AI SDLC brings the entire delivery lifecycle into one workflow. It creates and manages projects, links Jira planning, tracks future sprints, coordinates coding and testing agents, validates security checkpoints, and surfaces the current project state in a single dashboard. The result is a repeatable, transparent, and AI-assisted delivery process that helps teams move from idea to release faster.',
+    benefits: [
+      'Standardize project delivery across planning, coding, testing, and security review.',
+      'Reduce manual handoffs by connecting Jira, GitHub, and agent workflows in one system.',
+      'Improve traceability with live project status and sprint-level visibility.',
+      'Accelerate delivery while preserving quality gates and review checkpoints.'
+    ],
+    features: ['Project Intake', 'Jira Planning', 'Coding Orchestration', 'Testing Gates', 'Security Review', 'GitHub Sync'],
+    imageUrl: '/assets/glenn-carstens-peters-npxXWgQ33ZQ-unsplash.jpg',
+  },
 ];
 
 export type Project = typeof projects[0];
