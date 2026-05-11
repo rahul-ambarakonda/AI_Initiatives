@@ -32,7 +32,7 @@ const demoRequestSchema = z
   });
 
 const backendBaseUrl = (
-  process.env.BACKEND_API_URL ?? 'http://localhost:3001'
+  process.env.BACKEND_API_URL ?? 'https://api.ai-coe.net'
 ).replace(/\/$/, '');
 
 const localSubmissionsFile = path.join(
