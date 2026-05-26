@@ -1,8 +1,8 @@
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap');
+
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
-
-@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap');
 
 * {
   @apply m-0 p-0 box-border;
@@ -34,33 +34,10 @@ body {
   animation: title-animation 1s ease-in-out;
 }
 
-/* Custom utility classes */
-.gradient-primary {
-  @apply bg-gradient-to-r from-primary-600 to-primary-800;
-}
-
-.text-gradient {
-  @apply bg-gradient-to-r from-primary-600 to-primary-800 bg-clip-text text-transparent;
-}
-
 .glass-effect {
   @apply backdrop-blur-lg bg-white/10 border border-white/20;
 }
 
-.card-base {
-  @apply rounded-xl shadow-card transition-all duration-300;
-}
-
-.card-hover:hover {
-  @apply shadow-card-hover -translate-y-1;
-}
-
-/* Smooth transitions */
-.fade-in {
-  @apply animate-fadeIn;
-}
-
-/* Custom animations */
 @keyframes fadeIn {
   from {
     opacity: 0;
@@ -106,7 +83,6 @@ body {
   animation: slideInUp 0.6s ease-out;
 }
 
-/* Scrollbar styling */
 ::-webkit-scrollbar {
   width: 8px;
   height: 8px;
@@ -123,46 +99,4 @@ body {
 
 ::-webkit-scrollbar-thumb:hover {
   background: rgba(0, 51, 141, 0.5);
-}
-
-/* Form styles */
-input, textarea, select {
-  @apply rounded-lg border border-gray-200 px-4 py-3 w-full text-gray-900 placeholder-gray-400 transition-all duration-200;
-  @apply focus:outline-none focus:ring-2 focus:ring-primary-600 focus:border-transparent;
-}
-
-button:focus {
-  @apply outline-none ring-2 ring-offset-2 ring-primary-600;
-}
-
-/* Typography */
-h1, h2, h3, h4, h5, h6 {
-  @apply font-bold leading-tight;
-}
-
-h1 {
-  @apply text-4xl md:text-5xl;
-}
-
-h2 {
-  @apply text-3xl md:text-4xl;
-}
-
-h3 {
-  @apply text-xl md:text-2xl;
-}
-
-/* Link styles */
-a {
-  @apply text-primary-600 hover:text-primary-800 transition-colors duration-200;
-  @apply focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-primary-600 rounded;
-}
-
-/* Code block styles */
-pre {
-  @apply bg-gray-100 rounded-lg p-4 overflow-x-auto;
-}
-
-code {
-  @apply font-mono text-sm;
 }

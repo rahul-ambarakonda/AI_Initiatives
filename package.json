@@ -3,29 +3,24 @@
   "version": "1.0.0",
   "description": "AI Initiatives - Project Showcase & Demo Booking Platform",
   "scripts": {
-    "dev": "next dev",
-    "build": "next build",
-    "start": "next start",
-    "lint": "next lint"
+    "dev": "vite",
+    "build": "tsc && vite build",
+    "preview": "vite preview"
   },
   "dependencies": {
-    "axios": "^1.6.0",
-    "bcryptjs": "^2.4.3",
-    "framer-motion": "^10.16.4",
-    "next": "^14.2.35",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
-    "sql.js": "^1.8.0",
-    "tailwindcss": "^3.3.0",
     "zod": "^3.22.0"
   },
   "devDependencies": {
     "@types/node": "^20",
     "@types/react": "^18",
     "@types/react-dom": "^18",
-    "@types/sql.js": "^1.4.11",
+    "@vitejs/plugin-react": "^4.3.0",
     "autoprefixer": "^10.4.14",
     "postcss": "^8",
-    "typescript": "^5"
+    "tailwindcss": "^3.3.0",
+    "typescript": "^5",
+    "vite": "^7.0.0"
   }
 }

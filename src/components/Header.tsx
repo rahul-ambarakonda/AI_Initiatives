@@ -1,30 +1,6 @@
-'use client';
-
 type HeaderProps = {
   onContactOpen: () => void;
 };
-
-function BotIcon({ className = '' }: { className?: string }) {
-  return (
-    <svg
-      viewBox="0 0 24 24"
-      fill="none"
-      stroke="currentColor"
-      strokeWidth="1.8"
-      strokeLinecap="round"
-      strokeLinejoin="round"
-      className={className}
-      aria-hidden="true"
-    >
-      <rect x="6" y="7" width="12" height="10" rx="3" />
-      <path d="M12 3v4" />
-      <path d="M9 11h.01" />
-      <path d="M15 11h.01" />
-      <path d="M9 15h6" />
-      <path d="M8 21h8" />
-    </svg>
-  );
-}
 
 function BriefcaseIcon({ className = '' }: { className?: string }) {
   return (
@@ -83,7 +59,6 @@ function ArrowRightIcon({ className = '' }: { className?: string }) {
 }
 
 const navItems = [
-  { id: 'ai-solutions', label: 'AI Solutions', icon: BotIcon },
   { id: 'projects', label: 'Projects', icon: BriefcaseIcon },
   { id: 'services', label: 'Services', icon: ArrowRightIcon },
 ];
@@ -91,13 +66,9 @@ const navItems = [
 export default function Header({ onContactOpen }: HeaderProps) {
   const scrollToSection = (id: string) => {
     const element = document.getElementById(id);
-
     if (element) {
       element.scrollIntoView({ behavior: 'smooth', block: 'start' });
-      return;
     }
-
-    window.location.href = `/#${id}`;
   };
 
   return (
@@ -110,41 +81,35 @@ export default function Header({ onContactOpen }: HeaderProps) {
             className="group flex items-center gap-3 rounded-full px-2 py-1 transition-all duration-300 hover:bg-slate-100 focus:outline-none focus:ring-2 focus:ring-slate-300"
             aria-label="Go to top"
           >
+            <div className="flex h-10 w-10 items-center justify-center rounded-full bg-gradient-to-r from-blue-600 to-purple-600 text-white shadow-sm transition-transform duration-300 group-hover:scale-105">
+              <svg
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="white"
+                strokeWidth="1.8"
+                strokeLinecap="round"
+                strokeLinejoin="round"
+                className="h-5 w-5"
+              >
+                <rect x="5" y="8" width="14" height="9" rx="3" />
+                <path d="M12 3v3" />
+                <circle cx="9" cy="12" r="1" />
+                <circle cx="15" cy="12" r="1" />
+                <path d="M9 15h6" />
+              </svg>
+            </div>
 
-            {/* Logo Badge */}
-<div className="flex h-10 w-10 items-center justify-center rounded-full bg-gradient-to-r from-blue-600 to-purple-600 text-white shadow-sm transition-transform duration-300 group-hover:scale-105">
-<svg
-  viewBox="0 0 24 24"
-  fill="none"
-  stroke="white"
-  strokeWidth="1.8"
-  strokeLinecap="round"
-  strokeLinejoin="round"
-  className="h-5 w-5"
->
-  <rect x="5" y="8" width="14" height="9" rx="3" />
-  <path d="M12 3v3" />
-  <circle cx="9" cy="12" r="1" />
-  <circle cx="15" cy="12" r="1" />
-  <path d="M9 15h6" />
-</svg>
-</div>
-
-            {/* Brand Text */}
             <div className="text-left">
               <span className="block text-lg font-bold tracking-tight text-blue-700">
-                AI Initiatives
+                AI - COE
               </span>
-
               <span className="block text-xs text-slate-500">
                 Digital Engineering Solutions
               </span>
             </div>
-
           </button>
 
           <nav className="hidden md:flex items-center gap-2">
-
             {navItems.map(({ id, label, icon: Icon }) => (
               <button
                 key={id}
@@ -164,7 +129,6 @@ export default function Header({ onContactOpen }: HeaderProps) {
               <span>Contact us</span>
               <ArrowRightIcon className="h-4 w-4 transition-transform duration-300 group-hover:translate-x-0.5" />
             </button>
-
           </nav>
         </div>
       </div>

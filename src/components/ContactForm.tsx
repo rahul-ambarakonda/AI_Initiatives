@@ -1,5 +1,3 @@
-'use client';
-
 import type { FormEvent } from 'react';
 import { useState } from 'react';
 import { z } from 'zod';
@@ -25,9 +23,7 @@ export default function ContactForm() {
 
   const [errors, setErrors] = useState<z.ZodError | null>(null);
   const [isSubmitting, setIsSubmitting] = useState(false);
-  const [submitStatus, setSubmitStatus] = useState<'success' | 'error' | null>(
-    null
-  );
+  const [submitStatus, setSubmitStatus] = useState<'success' | 'error' | null>(null);
 
   const handleSubmit = async (event: FormEvent<HTMLFormElement>) => {
     event.preventDefault();
@@ -44,7 +40,8 @@ export default function ContactForm() {
     setIsSubmitting(true);
 
     try {
-      const response = await fetch('/api/demos', {
+      const backendUrl = 'https://api.ai-coe.net';
+      const response = await fetch(`${backendUrl}/api/submissions`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify(result.data),
@@ -55,13 +52,7 @@ export default function ContactForm() {
       }
 
       setSubmitStatus('success');
-      setFormData({
-        name: '',
-        email: '',
-        company: '',
-        project: '',
-        description: '',
-      });
+      setFormData({ name: '', email: '', company: '', project: '', description: '' });
     } catch {
       setSubmitStatus('error');
     } finally {
@@ -76,11 +67,9 @@ export default function ContactForm() {
         <p className="text-sm tracking-widest text-blue-500 font-semibold uppercase">
           LET'S TALK
         </p>
-
         <h2 className="text-4xl font-bold mt-2">
           Request a <span className="text-indigo-600">live demo</span>
         </h2>
-
         <p className="text-gray-500 mt-2">
           Tell us a bit about you and we'll get back within one business day.
         </p>
@@ -92,31 +81,23 @@ export default function ContactForm() {
           {/* Row 1 */}
           <div className="grid md:grid-cols-2 gap-6">
             <div>
-              <label className="text-sm font-medium text-gray-700">
-                FULL NAME *
-              </label>
+              <label className="text-sm font-medium text-gray-700">FULL NAME *</label>
               <input
                 type="text"
                 placeholder="Enter your full name"
                 value={formData.name}
-                onChange={(e) =>
-                  setFormData({ ...formData, name: e.target.value })
-                }
+                onChange={(e) => setFormData({ ...formData, name: e.target.value })}
                 className="mt-2 w-full rounded-xl border border-gray-300 bg-gray-200 px-4 py-3 placeholder-gray-500 focus:bg-white focus:ring-2 focus:ring-indigo-500 outline-none"
               />
             </div>
 
             <div>
-              <label className="text-sm font-medium text-gray-700">
-                WORK EMAIL *
-              </label>
+              <label className="text-sm font-medium text-gray-700">WORK EMAIL *</label>
               <input
                 type="email"
                 placeholder="Enter your work email"
                 value={formData.email}
-                onChange={(e) =>
-                  setFormData({ ...formData, email: e.target.value })
-                }
+                onChange={(e) => setFormData({ ...formData, email: e.target.value })}
                 className="mt-2 w-full rounded-xl border border-gray-300 bg-gray-200 px-4 py-3 placeholder-gray-500 focus:bg-white focus:ring-2 focus:ring-indigo-500 outline-none"
               />
             </div>
@@ -125,30 +106,21 @@ export default function ContactForm() {
           {/* Row 2 */}
           <div className="grid md:grid-cols-2 gap-6">
             <div>
-              <label className="text-sm font-medium text-gray-700">
-                COMPANY *
-              </label>
+              <label className="text-sm font-medium text-gray-700">COMPANY *</label>
               <input
                 type="text"
                 placeholder="Enter your company name"
                 value={formData.company}
-                onChange={(e) =>
-                  setFormData({ ...formData, company: e.target.value })
-                }
+                onChange={(e) => setFormData({ ...formData, company: e.target.value })}
                 className="mt-2 w-full rounded-xl border border-gray-300 bg-gray-200 px-4 py-3 placeholder-gray-500 focus:bg-white focus:ring-2 focus:ring-indigo-500 outline-none"
               />
             </div>
 
             <div>
-              <label className="text-sm font-medium text-gray-700">
-                PROJECT INTERESTED IN *
-              </label>
-
+              <label className="text-sm font-medium text-gray-700">PROJECT INTERESTED IN *</label>
               <select
                 value={formData.project}
-                onChange={(e) =>
-                  setFormData({ ...formData, project: e.target.value })
-                }
+                onChange={(e) => setFormData({ ...formData, project: e.target.value })}
                 className="mt-2 w-full rounded-xl border border-gray-300 bg-gray-200 px-4 py-3 placeholder-gray-500 focus:bg-white focus:ring-2 focus:ring-indigo-500 outline-none"
               >
                 <option value="">Select an option</option>
@@ -165,17 +137,12 @@ export default function ContactForm() {
 
           {/* Message */}
           <div>
-            <label className="text-sm font-medium text-gray-700">
-              DESCRIPTION *
-            </label>
-
+            <label className="text-sm font-medium text-gray-700">DESCRIPTION *</label>
             <textarea
               rows={4}
               placeholder="What problem are you trying to solve?"
               value={formData.description}
-              onChange={(e) =>
-                setFormData({ ...formData, description: e.target.value })
-              }
+              onChange={(e) => setFormData({ ...formData, description: e.target.value })}
               className="mt-2 w-full rounded-xl border border-gray-300 bg-gray-200 px-4 py-3 placeholder-gray-500 focus:bg-white focus:ring-2 focus:ring-indigo-500 outline-none"
             />
           </div>
@@ -188,7 +155,6 @@ export default function ContactForm() {
               className="flex items-center gap-2 bg-gradient-to-r from-blue-600 to-purple-600 text-white px-8 py-3 rounded-full font-semibold hover:opacity-90 transition disabled:opacity-60"
             >
               {isSubmitting ? 'Submitting...' : 'Send request'}
-
               <svg
                 xmlns="http://www.w3.org/2000/svg"
                 className="w-4 h-4"
@@ -218,15 +184,11 @@ export default function ContactForm() {
           )}
 
           {submitStatus === 'success' && (
-            <p className="text-green-600 text-sm">
-              Request submitted successfully!
-            </p>
+            <p className="text-green-600 text-sm">Request submitted successfully!</p>
           )}
 
           {submitStatus === 'error' && !errors && (
-            <p className="text-red-600 text-sm">
-              Something went wrong.
-            </p>
+            <p className="text-red-600 text-sm">Something went wrong.</p>
           )}
         </form>
       </div>

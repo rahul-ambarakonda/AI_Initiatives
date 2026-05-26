@@ -1,16 +1,12 @@
-'use client';
-
 import { useState } from 'react';
-import Header from './components/Header';
-import Hero from './components/Hero';
-import ProjectCard from './components/ProjectCard';
-import ProjectModal from './components/ProjectModal';
-import ContactModal from './components/ContactModal';
-import Footer from './components/Footer';
+import Header from '@/components/Header';
+import ProjectCard from '@/components/ProjectCard';
+import ProjectModal from '@/components/ProjectModal';
+import ContactModal from '@/components/ContactModal';
+import Footer from '@/components/Footer';
 import { projects, Project } from '@/lib/projects';
-import Image from 'next/image';
 
-export default function Home() {
+export default function App() {
   const [selectedProject, setSelectedProject] = useState<Project | null>(null);
   const [isProjectModalOpen, setIsProjectModalOpen] = useState(false);
   const [isContactModalOpen, setIsContactModalOpen] = useState(false);
@@ -28,14 +24,13 @@ export default function Home() {
   return (
     <main className="min-h-screen bg-gray-50">
       <Header onContactOpen={() => setIsContactModalOpen(true)} />
-      <Hero />
 
       {/* Projects Section */}
       <section id="projects" className="py-20 px-4 sm:px-6 lg:px-8 bg-white">
         <div className="max-w-7xl mx-auto">
           <div className="text-center mb-16">
             <h2 className="text-4xl md:text-5xl font-bold text-gray-900 mb-4">
-              Featured AI Initiatives
+              Enterprise AI Strategies & Solutions
             </h2>
             <p className="text-lg text-gray-600 max-w-3xl mx-auto">
               Explore our cutting-edge AI projects transforming digital engineering, quality, and business operations for industry leaders.
@@ -69,9 +64,7 @@ export default function Home() {
 
             {/* Card 1 */}
             <div className="group bg-blue-50 rounded-lg overflow-hidden shadow-lg hover:shadow-2xl transition-all duration-500 transform hover:-translate-y-3 hover:scale-[1.03] relative">
-
               <div className="absolute inset-0 bg-gradient-to-r from-cyan-400/0 via-purple-400/0 to-blue-400/0 group-hover:from-cyan-400/10 group-hover:via-purple-400/10 group-hover:to-blue-400/10 transition duration-500"></div>
-
               <div className="p-6 relative">
                 <h3 className="text-xl font-bold text-gray-900 mb-3 group-hover:text-indigo-600 transition-colors duration-300">
                   Digital Solution Development
@@ -80,14 +73,11 @@ export default function Home() {
                   End-to-end digital service designed to factor in all facets of modern engineering and design transformation.
                 </p>
               </div>
-
             </div>
 
             {/* Card 2 */}
             <div className="group bg-blue-50 rounded-lg overflow-hidden shadow-lg hover:shadow-2xl transition-all duration-500 transform hover:-translate-y-3 hover:scale-[1.03] relative">
-
               <div className="absolute inset-0 bg-gradient-to-r from-cyan-400/0 via-purple-400/0 to-blue-400/0 group-hover:from-cyan-400/10 group-hover:via-purple-400/10 group-hover:to-blue-400/10 transition duration-500"></div>
-
               <div className="p-6 relative">
                 <h3 className="text-xl font-bold text-gray-900 mb-3 group-hover:text-indigo-600 transition-colors duration-300">
                   Digital Business Automation
@@ -96,14 +86,11 @@ export default function Home() {
                   Boost revenue streams and stay ahead of competition with integrated digital automation solutions.
                 </p>
               </div>
-
             </div>
 
             {/* Card 3 */}
             <div className="group bg-blue-50 rounded-lg overflow-hidden shadow-lg hover:shadow-2xl transition-all duration-500 transform hover:-translate-y-3 hover:scale-[1.03] relative">
-
               <div className="absolute inset-0 bg-gradient-to-r from-cyan-400/0 via-purple-400/0 to-blue-400/0 group-hover:from-cyan-400/10 group-hover:via-purple-400/10 group-hover:to-blue-400/10 transition duration-500"></div>
-
               <div className="p-6 relative">
                 <h3 className="text-xl font-bold text-gray-900 mb-3 group-hover:text-indigo-600 transition-colors duration-300">
                   Digital Quality Assurance
@@ -112,7 +99,6 @@ export default function Home() {
                   Enhance product quality and reliability with our comprehensive digital quality assurance services.
                 </p>
               </div>
-
             </div>
 
           </div>
@@ -124,10 +110,6 @@ export default function Home() {
           project={selectedProject}
           isOpen={isProjectModalOpen}
           onClose={handleProjectModalClose}
-          onRequestDemo={() => {
-            setIsProjectModalOpen(false);
-            setIsContactModalOpen(true);
-          }}
         />
       )}
 

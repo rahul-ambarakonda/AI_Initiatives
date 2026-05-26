@@ -1,10 +1,9 @@
-import type { Config } from 'tailwindcss'
+import type { Config } from 'tailwindcss';
 
 const config: Config = {
   content: [
-    './app/**/*.{js,ts,jsx,tsx}',
-    './pages/**/*.{js,ts,jsx,tsx}',
-    './components/**/*.{js,ts,jsx,tsx}',
+    './index.html',
+    './src/**/*.{js,ts,jsx,tsx}',
   ],
   theme: {
     extend: {
@@ -32,12 +31,12 @@ const config: Config = {
           '700': '#2d3748',
           '800': '#1a202c',
           '900': '#171923',
-        }
+        },
       },
       boxShadow: {
-        'card': '0 8px 24px rgba(23, 25, 35, 0.08)',
+        card: '0 8px 24px rgba(23, 25, 35, 0.08)',
         'card-hover': '0 16px 40px rgba(23, 25, 35, 0.12)',
-        'glow': '0 0 20px rgba(7, 122, 255, 0.3)',
+        glow: '0 0 20px rgba(7, 122, 255, 0.3)',
         'glow-lg': '0 0 40px rgba(7, 122, 255, 0.4)',
       },
       animation: {
@@ -47,7 +46,7 @@ const config: Config = {
         'scale-in': 'scaleIn 0.5s ease-out',
         'bounce-subtle': 'bounceSubtle 2s infinite',
         'pulse-glow': 'pulseGlow 2s cubic-bezier(0.4, 0, 0.6, 1) infinite',
-        'shimmer': 'shimmer 2s infinite',
+        shimmer: 'shimmer 2s infinite',
       },
       keyframes: {
         fadeIn: {
@@ -82,5 +81,6 @@ const config: Config = {
     },
   },
   plugins: [],
-}
-export default config
+};
+
+export default config;
