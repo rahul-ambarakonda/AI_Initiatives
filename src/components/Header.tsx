@@ -26,6 +26,25 @@ function BriefcaseIcon({ className = '' }: { className?: string }) {
   );
 }
 
+function HomeIcon({ className = '' }: { className?: string }) {
+  return (
+    <svg
+      viewBox="0 0 24 24"
+      fill="none"
+      stroke="currentColor"
+      strokeWidth="1.8"
+      strokeLinecap="round"
+      strokeLinejoin="round"
+      className={className}
+      aria-hidden="true"
+    >
+      <path d="M3 11.5 12 4l9 7.5" />
+      <path d="M5.5 10.5V20h13V10.5" />
+      <path d="M9.5 20v-6h5v6" />
+    </svg>
+  );
+}
+
 function MailIcon({ className = '' }: { className?: string }) {
   return (
     <svg
@@ -105,6 +124,14 @@ export default function Header({ onHomeOpen, onSolutionsOpen, onServicesOpen, on
 
           <nav className="hidden md:flex items-center gap-2">
             <button
+              onClick={onHomeOpen}
+              className="group inline-flex items-center gap-2 rounded-full bg-blue-100 px-4 py-2 text-sm font-semibold text-blue-700 transition-all duration-300 hover:-translate-y-0.5 hover:bg-gray-100 hover:text-slate-700 hover:shadow-md focus:outline-none focus:ring-2 focus:ring-blue-200"
+            >
+              <HomeIcon className="h-4 w-4 transition-transform duration-300 group-hover:scale-110" />
+              <span>Home</span>
+            </button>
+
+            <button
               onClick={onSolutionsOpen}
               className="group inline-flex items-center gap-2 rounded-full bg-blue-100 px-4 py-2 text-sm font-semibold text-blue-700 transition-all duration-300 hover:-translate-y-0.5 hover:bg-gray-100 hover:text-slate-700 hover:shadow-md focus:outline-none focus:ring-2 focus:ring-blue-200"
             >
@@ -114,8 +141,9 @@ export default function Header({ onHomeOpen, onSolutionsOpen, onServicesOpen, on
 
             <button
               onClick={servicesDisabled ? undefined : onServicesOpen}
-              disabled={servicesDisabled}
-              className="group inline-flex items-center gap-2 rounded-full bg-blue-100 px-4 py-2 text-sm font-semibold text-blue-700 transition-all duration-300 hover:-translate-y-0.5 hover:bg-gray-100 hover:text-slate-700 hover:shadow-md focus:outline-none focus:ring-2 focus:ring-blue-200 disabled:cursor-not-allowed disabled:opacity-45 disabled:hover:translate-y-0 disabled:hover:bg-blue-100 disabled:hover:text-blue-700 disabled:hover:shadow-md"
+              aria-disabled={servicesDisabled}
+              tabIndex={servicesDisabled ? -1 : 0}
+              className={`group inline-flex items-center gap-2 rounded-full bg-blue-100 px-4 py-2 text-sm font-semibold text-blue-700 transition-all duration-300 hover:-translate-y-0.5 hover:bg-gray-100 hover:text-slate-700 hover:shadow-md focus:outline-none focus:ring-2 focus:ring-blue-200 ${servicesDisabled ? 'pointer-events-none' : ''}`}
             >
               <ArrowRightIcon className="h-4 w-4 transition-transform duration-300 group-hover:scale-110" />
               <span>Services</span>

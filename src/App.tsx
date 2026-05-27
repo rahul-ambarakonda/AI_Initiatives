@@ -220,14 +220,6 @@ function SolutionsPage({
             <p className="mx-auto mt-5 max-w-3xl text-lg leading-8 text-slate-600">
               Explore our cutting-edge AI projects transforming digital engineering, quality, and business operations for industry leaders.
             </p>
-            <div className="mt-8 flex items-center justify-center gap-3">
-              <button
-                onClick={onBackToCover}
-                className="inline-flex items-center gap-2 rounded-full border border-slate-200 bg-white px-5 py-3 text-sm font-semibold text-slate-700 shadow-sm transition-all duration-300 hover:-translate-y-0.5 hover:border-blue-200 hover:text-blue-700 hover:shadow-md focus:outline-none focus:ring-2 focus:ring-blue-200"
-              >
-                Back to cover
-              </button>
-            </div>
           </div>
         </div>
       </section>
