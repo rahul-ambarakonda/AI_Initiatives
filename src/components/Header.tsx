@@ -1,5 +1,9 @@
 type HeaderProps = {
+  onHomeOpen: () => void;
+  onSolutionsOpen: () => void;
+  onServicesOpen: () => void;
   onContactOpen: () => void;
+  currentPath: string;
 };
 
 function BriefcaseIcon({ className = '' }: { className?: string }) {
@@ -58,26 +62,16 @@ function ArrowRightIcon({ className = '' }: { className?: string }) {
   );
 }
 
-const navItems = [
-  { id: 'projects', label: 'Projects', icon: BriefcaseIcon },
-  { id: 'services', label: 'Services', icon: ArrowRightIcon },
-];
-
-export default function Header({ onContactOpen }: HeaderProps) {
-  const scrollToSection = (id: string) => {
-    const element = document.getElementById(id);
-    if (element) {
-      element.scrollIntoView({ behavior: 'smooth', block: 'start' });
-    }
-  };
+export default function Header({ onHomeOpen, onSolutionsOpen, onServicesOpen, onContactOpen, currentPath }: HeaderProps) {
+  const servicesDisabled = currentPath === '/';
 
   return (
-    <header className="sticky top-0 z-50 border-b border-slate-200/70 bg-white/90 backdrop-blur-md shadow-sm">
+    <header className="sticky top-0 z-50 border-b border-slate-200/70 bg-gradient-to-r from-white via-slate-50 to-blue-50/80 backdrop-blur-md shadow-sm">
       <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
         <div className="flex h-16 items-center justify-between gap-4">
 
           <button
-            onClick={() => window.scrollTo({ top: 0, behavior: 'smooth' })}
+            onClick={onHomeOpen}
             className="group flex items-center gap-3 rounded-full px-2 py-1 transition-all duration-300 hover:bg-slate-100 focus:outline-none focus:ring-2 focus:ring-slate-300"
             aria-label="Go to top"
           >
@@ -110,16 +104,22 @@ export default function Header({ onContactOpen }: HeaderProps) {
           </button>
 
           <nav className="hidden md:flex items-center gap-2">
-            {navItems.map(({ id, label, icon: Icon }) => (
-              <button
-                key={id}
-                onClick={() => scrollToSection(id)}
-                className="group inline-flex items-center gap-2 rounded-full bg-blue-100 px-4 py-2 text-sm font-semibold text-blue-700 transition-all duration-300 hover:-translate-y-0.5 hover:bg-gray-100 hover:text-slate-700 hover:shadow-md focus:outline-none focus:ring-2 focus:ring-blue-200"
-              >
-                <Icon className="h-4 w-4 transition-transform duration-300 group-hover:scale-110" />
-                <span>{label}</span>
-              </button>
-            ))}
+            <button
+              onClick={onSolutionsOpen}
+              className="group inline-flex items-center gap-2 rounded-full bg-blue-100 px-4 py-2 text-sm font-semibold text-blue-700 transition-all duration-300 hover:-translate-y-0.5 hover:bg-gray-100 hover:text-slate-700 hover:shadow-md focus:outline-none focus:ring-2 focus:ring-blue-200"
+            >
+              <ArrowRightIcon className="h-4 w-4 transition-transform duration-300 group-hover:scale-110" />
+              <span>Solutions</span>
+            </button>
+
+            <button
+              onClick={servicesDisabled ? undefined : onServicesOpen}
+              disabled={servicesDisabled}
+              className="group inline-flex items-center gap-2 rounded-full bg-blue-100 px-4 py-2 text-sm font-semibold text-blue-700 transition-all duration-300 hover:-translate-y-0.5 hover:bg-gray-100 hover:text-slate-700 hover:shadow-md focus:outline-none focus:ring-2 focus:ring-blue-200 disabled:cursor-not-allowed disabled:opacity-45 disabled:hover:translate-y-0 disabled:hover:bg-blue-100 disabled:hover:text-blue-700 disabled:hover:shadow-md"
+            >
+              <ArrowRightIcon className="h-4 w-4 transition-transform duration-300 group-hover:scale-110" />
+              <span>Services</span>
+            </button>
 
             <button
               onClick={onContactOpen}
