@@ -1,23 +1,13 @@
-import { useEffect, useRef } from 'react';
+import { useEscapeKey } from '@/hooks/useEscapeKey';
 
 type VideoModalProps = {
-  isOpen: boolean;
   onClose: () => void;
   title: string;
   videoUrl: string;
 };
 
-export default function VideoModal({ isOpen, onClose, title, videoUrl }: VideoModalProps) {
-  const videoRef = useRef<HTMLVideoElement>(null);
-
-  useEffect(() => {
-    if (!isOpen && videoRef.current) {
-      videoRef.current.pause();
-      videoRef.current.currentTime = 0;
-    }
-  }, [isOpen]);
-
-  if (!isOpen) return null;
+export default function VideoModal({ onClose, title, videoUrl }: VideoModalProps) {
+  useEscapeKey(onClose);
 
   return (
     <div
@@ -28,7 +18,6 @@ export default function VideoModal({ isOpen, onClose, title, videoUrl }: VideoMo
         className="relative bg-black rounded-2xl shadow-2xl w-full max-w-4xl overflow-hidden"
         onClick={(e) => e.stopPropagation()}
       >
-        {/* Header */}
         <div className="flex items-center justify-between px-5 py-3 bg-gray-900">
           <h3 className="text-white font-semibold text-sm truncate">{title} — Demo</h3>
           <button
@@ -46,10 +35,8 @@ export default function VideoModal({ isOpen, onClose, title, videoUrl }: VideoMo
           </button>
         </div>
 
-        {/* Video */}
         <div className="aspect-video bg-black">
           <video
-            ref={videoRef}
             src={videoUrl}
             controls
             autoPlay

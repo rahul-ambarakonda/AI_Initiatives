@@ -1,19 +1,18 @@
 import { Project } from '@/lib/projects';
+import { useEscapeKey } from '@/hooks/useEscapeKey';
 
 type ProjectModalProps = {
-  isOpen: boolean;
   onClose: () => void;
   project: Project;
 };
 
-export default function ProjectModal({ isOpen, onClose, project }: ProjectModalProps) {
-  if (!isOpen) return null;
+export default function ProjectModal({ onClose, project }: ProjectModalProps) {
+  useEscapeKey(onClose);
 
   return (
     <div className="fixed inset-0 bg-black bg-opacity-75 z-50 flex items-center justify-center p-4 animate-fade-in">
       <div className="relative bg-white rounded-2xl shadow-2xl max-w-4xl w-full max-h-[90vh] overflow-hidden flex flex-col">
 
-        {/* Close Button */}
         <button
           onClick={onClose}
           className="absolute top-4 right-4 text-gray-400 hover:text-gray-700 transition-colors bg-white/50 hover:bg-white rounded-full p-2 z-20"
@@ -28,10 +27,7 @@ export default function ProjectModal({ isOpen, onClose, project }: ProjectModalP
           </svg>
         </button>
 
-        {/* Modal Body */}
         <div className="overflow-y-auto">
-
-          {/* Project Image Header */}
           <div className="relative h-72 w-full">
             <img
               src={project.imageUrl}
@@ -42,23 +38,18 @@ export default function ProjectModal({ isOpen, onClose, project }: ProjectModalP
           </div>
 
           <div className="p-8 md:p-12">
-
-            {/* Title section */}
             <div className="text-center mb-10">
               <span className="inline-block px-4 py-2 text-sm font-bold text-gray-600 bg-gray-100 rounded-full mb-6">
                 {project.category}
               </span>
-
               <h2 className="text-4xl md:text-5xl font-bold text-gray-900 mb-4">
                 {project.title}
               </h2>
-
               <p className="text-lg text-gray-700 leading-relaxed max-w-3xl mx-auto">
                 {project.description}
               </p>
             </div>
 
-            {/* Problem Statement */}
             <div className="mb-10">
               <h3 className="text-2xl font-bold text-gray-900 mb-4 border-l-4 border-gray-600 pl-4">
                 Problem Statement
@@ -73,17 +64,13 @@ export default function ProjectModal({ isOpen, onClose, project }: ProjectModalP
               </ul>
             </div>
 
-            {/* Solution */}
             <div className="mb-10">
               <h3 className="text-2xl font-bold text-gray-900 mb-4 border-l-4 border-gray-600 pl-4">
                 Our Solution
               </h3>
-              <p className="text-gray-800 leading-relaxed pl-4">
-                {project.solution}
-              </p>
+              <p className="text-gray-800 leading-relaxed pl-4">{project.solution}</p>
             </div>
 
-            {/* Key Benefits */}
             <div className="mb-10">
               <h3 className="text-2xl font-bold text-gray-900 mb-4 border-l-4 border-gray-600 pl-4">
                 Key Benefits
@@ -98,7 +85,6 @@ export default function ProjectModal({ isOpen, onClose, project }: ProjectModalP
               </div>
             </div>
 
-            {/* Features */}
             <div className="mb-8">
               <h3 className="text-2xl font-bold text-gray-900 mb-4 border-l-4 border-gray-600 pl-4">
                 Key Features
@@ -113,7 +99,6 @@ export default function ProjectModal({ isOpen, onClose, project }: ProjectModalP
                   </div>
                 ))}
               </div>
-
             </div>
           </div>
         </div>
