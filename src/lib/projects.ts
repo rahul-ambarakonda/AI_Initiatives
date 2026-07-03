@@ -19,32 +19,10 @@ export const projects = [
     ],
     features: ['Generative Design', 'Dual-Workflow Architecture', 'Interactive 3D Rendering'],
     imageUrl: '/assets/kumpan-electric-SYo5eazBrls-unsplash.jpg',
-    videoUrl: 'https://ai-coe.net/videos/Design_to_3D_ModelsV2.mp4',
+    videoUrl: 'https://ai-coe.net/videos/CAD_3d.mp4',
   },
   {
     id: 2,
-    title: 'Automated CAD to PDF Conversion',
-    description: 'A multi-stage AI pipeline to automate the conversion of CAD drawings (DWG, DXF) into high-quality, repaired PDF documents.',
-    category: 'Digital Solution Development',
-    problemStatement: [
-      'CAD files often suffer from corruption or geometric inaccuracies.',
-      'Standard conversions can lead to a loss of critical information like layers and annotations.',
-      'Manually converting and verifying large batches of drawings is not scalable.',
-    ],
-    solution:
-      "Our solution is a robust, multi-stage pipeline. It begins by repairing corrupted DXF files to ensure a clean foundation. An AI agent then analyzes the segmented geometry and text to understand the drawing's content intelligently. Finally, it reconstructs a high-fidelity PDF that preserves the visual and logical integrity of the original CAD file, making it perfect for archiving and sharing.",
-    benefits: [
-      'Ensure 100% conversion success rate with automated file repair.',
-      'Preserve all critical drawing data, including layers and metadata.',
-      'Scale conversion processes for thousands of files effortlessly.',
-      'Improve document quality and reliability for stakeholders.',
-    ],
-    features: ['DXF Repair', 'AI-Agent Analysis', 'High-Fidelity Reconstruction'],
-    imageUrl: '/assets/compagnons-AQTA5E6mCNU-unsplash.jpg',
-    videoUrl: 'https://ai-coe.net/videos/CAD-to-PDF.mp4',
-  },
-  {
-    id: 3,
     title: 'CodeLens AI',
     description: 'A full-stack code quality and security analysis platform that combines SonarQube with Gemini AI-driven insights.',
     category: 'Digital Quality Assurance',
@@ -63,10 +41,10 @@ export const projects = [
     ],
     features: ['AI-Powered Prioritization', 'Actionable Recommendations', 'Unified Dashboard'],
     imageUrl: '/assets/stephen-dawson-qwtCeJ5cLYs-unsplash.jpg',
-    videoUrl: 'https://ai-coe.net/videos/CodeLens_AI_Demo_v4.mp4',
+    videoUrl: 'https://ai-coe.net/videos/CodeLensAI.mp4',
   },
   {
-    id: 4,
+    id: 3,
     title: 'Agentic CAD to Creo',
     description: 'An automated, AI-driven QA and Healing Pipeline to convert foreign CAD formats into PTC Creo, ensuring model integrity.',
     category: 'Digital Solution Development',
@@ -85,10 +63,10 @@ export const projects = [
     ],
     features: ['Automated OODA Loop', 'AI-Powered Healing', 'Real ModelCHECK Diagnostics'],
     imageUrl: '/assets/thisisengineering-hoivM01c-vg-unsplash.jpg',
-    videoUrl: 'https://ai-coe.net/videos/CAD_PDF_Comparator.mp4',
+    videoUrl: 'https://ai-coe.net/videos/CAD_Fixing_Updated_1.mp4',
   },
   {
-    id: 5,
+    id: 4,
     title: 'Enterprise Document Intelligence',
     description: 'A centralized Document Management System with an integrated AI Assistant to enhance knowledge sharing and compliance.',
     category: 'Digital Business Automation',
@@ -107,10 +85,10 @@ export const projects = [
     ],
     features: ['AI-Powered Q&A', 'Centralized Repository', 'Training & Certification Management'],
     imageUrl: '/assets/carlos-muza-hpjSkU2UYSU-unsplash.jpg',
-    videoUrl: 'https://ai-coe.net/videos/NHAI_DEMO_FINAL.mp4',
+    videoUrl: 'https://ai-coe.net/videos/NHAI_V6.mp4',
   },
   {
-    id: 6,
+    id: 5,
     title: 'Vendor Performance Analytics',
     description: 'A comprehensive dashboard to monitor, manage, and analyze the performance of contract workers and vendors.',
     category: 'Digital Business Automation',
@@ -132,7 +110,7 @@ export const projects = [
     videoUrl: '',
   },
   {
-    id: 7,
+    id: 6,
     title: 'AI SDLC',
     description:
       'An AI-powered software delivery platform that streamlines the complete SDLC lifecycle, from project intake and sprint planning to AI-assisted development, intelligent code review, testing, security validation, and release management.',
@@ -165,7 +143,7 @@ export const projects = [
       'Workflow Automation',
     ],
     imageUrl: '/assets/glenn-carstens-peters-npxXWgQ33ZQ-unsplash.jpg',
-    videoUrl: 'https://ai-coe.net/videos/AI_SDLC_V5.mp4',
+    videoUrl: 'https://ai-coe.net/videos/AI_SDLC_V6.mp4',
   },
 ];
 

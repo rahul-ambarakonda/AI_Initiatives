@@ -101,7 +101,6 @@ export default function ContactForm() {
               >
                 <option value="">Select an option</option>
                 <option>Design Document to 3D Model</option>
-                <option>Automated CAD to PDF Conversion</option>
                 <option>CodeLens AI</option>
                 <option>Agentic CAD to Creo</option>
                 <option>Enterprise Document Intelligence</option>
